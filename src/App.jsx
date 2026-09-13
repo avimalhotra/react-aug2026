@@ -2,97 +2,59 @@ import HeaderComponent from "./Header";
 import FooterComponent from "./Footer";
 import CardComponent from "./Card";
 import {useState} from "react";
-import GreetUser from "./Greet";
 
 function App(){
 
   const [counter,setCounter]=useState(0);
+  // const [name,setName]=useState("");
+  // const [age,setAge]=useState(0);
+  const [user,setUser]=useState({name:"",age:"",email:"", city:""});
 
-  const cars=["swift","alto","brezza","baleno"];
-  const car={name:"swift", power:82, torque:112, price:800000};
-  const data=[
-    {"id":1,"name":"swift","type":"hatchback","price":870000},
-    {"id":2,"name":"dzire","type":"sedan","price":980000},
-    {"id":3,"name":"baleno","type":"hatchback","price":880000},
-    {"id":4,"name":"fronx","type":"hatchback","price":1150000},
-    {"id":5,"name":"brezza","type":"suv","price":1250000},
-    {"id":6,"name":"grand vitara","type":"suv","price":1990000},
-    {"id":7,"name":"alto","type":"hatchback","price":380000},
-    {"id":8,"name":"wagon r","type":"hatchback","price":500000},
-  ];
+  function changeUser(e){
+    const {name,value}=e.target;
+    setUser(prev=>({...prev, [name]:value}))
+  }
 
-  data.sort((x,y)=>{
-      // if(x.price<=y.price){ return 1 }
-      // else{ return -1 }
-      return (x.price<=y.price) ? -1 : 1;
-  });
+  // console.log( counter );
 
-  // const nums=[1,9,10,2,5,6,4];
-  // const even=nums.filter(i=>i%2==0);
-  // const suv=data.filter(i=>i.type=="suv");
-  
-  // const sum=nums.reduce((x,y)=>x+y,0);
-
-
-  const t=2;
-  const n="aa";
+  function handleClick(){ 
+    // setCounter(counter+1);
+    // setCounter(counter+2);
+    // setCounter(counter+3);
+    // setCounter(counter=>counter+1);
+    // setCounter(counter=>counter+2);
+    // setCounter(counter=>counter+3);
+  }
   
   return (
     <div className="container">
       <HeaderComponent />
       <main className="p-3 bg-primary-subtle">
-        <h2>Main</h2>
+        <h2>Main 1</h2>
         <p>Paragrapgh</p>
-        
-        <GreetUser time={10}></GreetUser>
-
-        {/* <p> {(t%2==0) ? "even" : "odd"}</p> */}
-        <p> N is : { n && "valid" }</p>
-          
+       
         <button className="btn btn-outline-danger me-2" onClick={()=>setCounter(counter+1)}>Increment</button>
         <button className="btn btn-outline-danger me-2" onClick={()=>setCounter(counter-1)}>Decrement</button>
         <button className="btn btn-outline-danger me-2" onClick={()=>setCounter(0)}>Reset</button>
-        <output>Counter : {counter}</output>
+        <output className="me-2">Counter : {counter}</output>
+        <button className="btn btn-outline-danger me-2" onClick={handleClick}>Handle Click</button>
        
       <hr />
-      <h3>Array</h3>
-      <ol>
-        { cars.map((elem,ind)=>(
-          <li key={ind}>{elem}</li>
-        )) }
-      </ol>
-      <h3>Object</h3>
-      <ol>
-        {
-          Object.entries(car).map(([key,value],ind)=>(
-            <li key={ind}>{key} - {value} </li>
-          ))
-        }
-      </ol>
-      <h3>JSON Array of Object</h3>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-            {
-              data.map(elem=>(
-                <tr key={elem.id}>
-                  <td>{elem.id}</td>
-                  <td>{elem.name}</td>
-                  <td>{elem.type}</td>
-                  <td>{elem.price}</td>
-                </tr>
-              ))
-            }
-        </tbody>
-      </table>
 
+      {/* <input type="text" placeholder="name" value={name} onChange={e=>setName(e.target.value)} /> */}
+      {/* <input type="number" placeholder="age" value={age} onChange={e=>setAge(e.target.valueAsNumber)} /> */}
+      
+      <label>Name: <input type="text" placeholder="name" name="name" value={user.name} onChange={changeUser} /></label>
+      <label>Age: <input type="number" placeholder="age" name="age" value={user.age} onChange={changeUser} /></label>
+      <label>Email: <input type="email" placeholder="Email" name="email" value={user.email} onChange={changeUser} /></label>
+      <label>City: <input type="text" placeholder="city" name="city" value={user.city} onChange={changeUser} /></label>
+
+      <p>Name: {user.name}</p>
+      <p>Age: {user.age}</p>
+      <p>Email: {user.email}</p>
+      <p>City: {user.city}</p>
+      
+      <hr />
 
       <h2>Courses</h2>
         <div className="row">
