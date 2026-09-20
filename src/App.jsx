@@ -5,71 +5,72 @@ import {useState} from "react";
 
 function App(){
 
-  const [counter,setCounter]=useState(0);
-  const [user,setUser]=useState({name:"",age:"",email:"", city:""});
-  const [cars,setCars]=useState([]);
+  function sayHi(){ console.log("hello");}
 
-
-  function changeUser(e){
-    const {name,value}=e.target;
-    setUser(prev=>({...prev, [name]:value}));
+  function greet(x){ 
+      if(x<12){ console.log("morning") }
+      else if(x<16){ console.log("afternoon") }
+      else if(x<24){ console.log("evening") }
+      else{ console.log("no argument");
+      }
   }
 
-  function addCar(){
-      setCars(e=>[...e,"dzire"]);
-  }
-
-  function removeSwift(){
-    setCars(cars.filter(i=>i!="swift"));
-  }
-
-   function updateCars(){
-    setCars(cars.map(i=>i.toUpperCase()));
-   }
-
-   function addCarData(e){
+  function sendForm(e){
       e.preventDefault();
-      const car=e.target.car.value;
-      if(!cars.includes(car)){ setCars( e=>[...e,car] ) }  
-   }
+      console.log( e.target.name.value );
+      console.log( e.target.email.value );
+  }
 
 
-   function callMe(x){
-    console.log(`hello ${x}`);
-   }
+  const [name,setName]=useState("");
+  const [chk,setChk]=useState(false);
+  const [gender,setGender]=useState("");
+  const [day,setDay]=useState("");
 
   
   return (
     <div className="container">
       <HeaderComponent />
       <main className="p-3 bg-primary-subtle">
-        {/* <h2 title="avi" onClick={callMe}>Main </h2> */}
-        <h2 title="avi" onClick={()=>callMe("avi")}>Main 1</h2>
-        <h2 title="avi" onClick={()=>callMe("isha")}>Main 2</h2>
+        <h2>Main </h2>
         <p>Paragrapgh</p>
-       
-        <button className="btn btn-outline-danger me-2" onClick={()=>setCounter(counter+1)}>Increment</button>
-        <button className="btn btn-outline-danger me-2" onClick={()=>setCounter(counter-1)}>Decrement</button>
-        <button className="btn btn-outline-danger me-2" onClick={()=>setCounter(0)}>Reset</button>
-        <output className="me-2">Counter : {counter}</output>
-        
-      <hr />
 
-      <label>Name: <input type="text" placeholder="name" name="name" value={user.name} onChange={changeUser} /></label>
-      <label>Age: <input type="number" placeholder="age" name="age" value={user.age} onChange={changeUser} /></label>
-      <label>Email: <input type="email" placeholder="Email" name="email" value={user.email} onChange={changeUser} /></label>
-      <label>City: <input type="text" placeholder="city" name="city" value={user.city} onChange={changeUser} /></label>
+        <button className="btn btn-primary me-3" onClick={sayHi}>Hello</button>
+        <button className="btn btn-primary me-3" onClick={ ()=> greet(new Date().getHours() ) }>Greet</button>
 
-      <p>Name: {user.name}</p>
-      <p>Age: {user.age}</p>
-      <p>Email: {user.email}</p>
-      <p>City: {user.city}</p>
-      
-      <hr />
+        <hr />
 
-      <button className="btn btn-primary me-3" onClick={addCar}>Add </button>
-      <button className="btn btn-primary me-3" onClick={removeSwift}>Remove</button>
-      <button className="btn btn-primary me-3" onClick={updateCars}>Update</button>
+        <form action="" className="row align-items-center" onSubmit={sendForm}>
+          <div className="col-auto"><label htmlFor="name">Name:</label></div>
+          <div className="col-auto"> <input className="form-control" type="text" name="name" id="name" required /></div>
+          <div className="col-auto"><label htmlFor="email">Email:</label></div>
+          <div className="col-auto"><input className="form-control" type="email" name="email" id="email" required /></div>
+          <div className="col-auto"><button className="btn btn-info">Check</button></div>
+          
+        </form>
+
+        <hr />
+
+        <input type="text" value={name} onChange={e=>setName(e.target.value)} /> <output>{name}</output>
+         <hr />
+
+         <hr />
+          <label className="me-3"><input type="radio" name="gender" value="female" checked={gender==="female"}  onChange={e=>setGender(e.target.value)}/> Female</label>
+          <label className="me-3"><input type="radio" name="gender" value="male" checked={gender==="male"} onChange={e=>setGender(e.target.value)} /> Male</label>
+          <output>{gender}</output>
+        <hr />
+         <label className="me-3"><input type="checkbox" name="chk" checked={chk} onChange={e=>setChk(e.target.checked)} /> Terms</label>
+          { chk && <b>I Agree</b> }
+          { !chk && <b>Not Agree</b> }
+         <hr />
+
+        <select value={day} onChange={e=>setDay(e.target.value)}>
+          <option disabled value="">--Choose Day--</option>
+          <option>Sunday</option>
+          <option>Monday</option>
+        </select>
+        <output>{day}</output>
+    
       <hr />
       <h2>Courses</h2>
       
@@ -82,23 +83,7 @@ function App(){
             </div>
         </div>
 
-        <h2>Todo List</h2>
-        <form className="row align-items-center mb-3" onSubmit={addCarData}>
-        <div className="col-auto">
-          <label className="form-label m-0">Add Car:</label>
-        </div>
-        <div className="col-auto">
-          <input type="text" name="car" required className="form-control"/>
-        </div>
-        <div className="col-auto">
-          <button className="btn btn-outline-secondary">Add</button>
-        </div>
-        </form>
-      <ol>
-          { cars.map((elem,ind)=>(
-            <li key={ind}>{elem}</li>
-          )) }
-      </ol>
+      
       </main>
       <FooterComponent />
     </div>
