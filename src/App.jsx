@@ -1,33 +1,29 @@
 import HeaderComponent from "./Header";
 import FooterComponent from "./Footer";
-import CardComponent from "./Card";
-import {useState} from "react";
+// import CardComponent from "./Card";
+import Component1 from "./Comp1";
+import Component2 from "./Comp2";
+import {useState, useEffect} from "react"
 
 function App(){
 
-  function sayHi(){ console.log("hello");}
+    const [counter, setCounter]=useState(0);
+    const [counter2, setCounter2]=useState(0);
+    const [terms,setTerms]=useState(false);
 
-  function greet(x){ 
-      if(x<12){ console.log("morning") }
-      else if(x<16){ console.log("afternoon") }
-      else if(x<24){ console.log("evening") }
-      else{ console.log("no argument");
-      }
-  }
+    
+    // useEffect(()=>{
+    //     console.log("use effect");           // always run on change
+    // });
 
-  function sendForm(e){
-      e.preventDefault();
-      console.log( e.target.name.value );
-      console.log( e.target.email.value );
-  }
+    // useEffect(()=>{
+    //     console.log("use effect with dep");
+    // },[counter2]);
 
+    // useEffect(()=>{
+    //     setInterval(()=>console.log(new Date()),1000);
+    // });
 
-  const [name,setName]=useState("");
-  const [chk,setChk]=useState(false);
-  const [gender,setGender]=useState("");
-  const [day,setDay]=useState("");
-
-  
   return (
     <div className="container">
       <HeaderComponent />
@@ -35,55 +31,24 @@ function App(){
         <h2>Main </h2>
         <p>Paragrapgh</p>
 
-        <button className="btn btn-primary me-3" onClick={sayHi}>Hello</button>
-        <button className="btn btn-primary me-3" onClick={ ()=> greet(new Date().getHours() ) }>Greet</button>
+        <button className="btn btn-primary me-3" onClick={()=>setCounter(counter+1)}>Counter 1</button>
+        <output>{counter}</output>
+        <button className="btn btn-primary mx-3" onClick={()=>setCounter2(counter2+1)}>Counter 2</button>
+        <output>{counter2}</output>
 
         <hr />
 
-        <form action="" className="row align-items-center" onSubmit={sendForm}>
-          <div className="col-auto"><label htmlFor="name">Name:</label></div>
-          <div className="col-auto"> <input className="form-control" type="text" name="name" id="name" required /></div>
-          <div className="col-auto"><label htmlFor="email">Email:</label></div>
-          <div className="col-auto"><input className="form-control" type="email" name="email" id="email" required /></div>
-          <div className="col-auto"><button className="btn btn-info">Check</button></div>
-          
-        </form>
-
-        <hr />
-
-        <input type="text" value={name} onChange={e=>setName(e.target.value)} /> <output>{name}</output>
-         <hr />
-
-         <hr />
-          <label className="me-3"><input type="radio" name="gender" value="female" checked={gender==="female"}  onChange={e=>setGender(e.target.value)}/> Female</label>
-          <label className="me-3"><input type="radio" name="gender" value="male" checked={gender==="male"} onChange={e=>setGender(e.target.value)} /> Male</label>
-          <output>{gender}</output>
-        <hr />
-         <label className="me-3"><input type="checkbox" name="chk" checked={chk} onChange={e=>setChk(e.target.checked)} /> Terms</label>
-          { chk && <b>I Agree</b> }
-          { !chk && <b>Not Agree</b> }
-         <hr />
-
-        <select value={day} onChange={e=>setDay(e.target.value)}>
-          <option disabled value="">--Choose Day--</option>
-          <option>Sunday</option>
-          <option>Monday</option>
-        </select>
-        <output>{day}</output>
-    
-      <hr />
-      <h2>Courses</h2>
-      
-        <div className="row">
-            <div className="col-md-6">
-              <CardComponent course="React 19 with Next.js" duration={4} des="React 19 with Next JS, TypeScript, Tailwind CSS and project"></CardComponent>
-            </div>
-            <div className="col-md-6">
-              <CardComponent course="Angular 22" duration={3} des="Angular 22 with TypeScript, Signals, Modules, Services and Project"></CardComponent>
-            </div>
+        <div className="form-check form-switch p-0">
+          <label className="form-check-label" htmlFor="switchCheckDefault">Comp 1</label>
+          <input className="form-check-input float-none mx-3" type="checkbox" role="switch" id="switchCheckDefault" onChange={e=>setTerms(e.target.checked)} />
+          <label className="form-check-label" htmlFor="switchCheckDefault">Comp 2</label>
         </div>
 
-      
+        { !terms && <Component1></Component1>}
+        { terms && <Component2></Component2>}
+        
+
+  
       </main>
       <FooterComponent />
     </div>
