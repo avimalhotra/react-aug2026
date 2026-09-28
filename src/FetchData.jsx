@@ -34,7 +34,6 @@ export default function FetchAPI(){
           cars.sort((x,y)=> (x[srt]<y[srt]) ? -1 : 1 );
      }
 
-
      return (
           <>
               
