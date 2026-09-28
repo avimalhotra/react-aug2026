@@ -1,14 +1,15 @@
-import { useEffect} from "react";
+import { } from "react";
 
-export default function Component2(){
-       useEffect(()=>{
-          const timer=setInterval(()=>console.log("Comp 2"),1000);
-
-          return ()=> clearInterval(timer);
-     },[]);
+export default function Component2( {counter}){
+       
      return (
           <>
-               <h2>Component 2</h2>
+               <div className="card">
+                    <div className="card-body">
+                         <h2>Component 2</h2>
+                         <p>{counter}</p>
+                    </div>
+               </div>
           </>
      )
 }
