@@ -1,76 +1,64 @@
 import HeaderComponent from "./Header";
 import FooterComponent from "./Footer";
-import {useRef, useState } from "react";
+import { useState, useReducer } from "react";
 import Component1 from "./Comp1";
 import Component2 from "./Comp2";
 
+import UserContext from "./contextapi";
+
 function App(){
 
-  const [count,setCount]=useState(0);
-  const data=[
-    { name:"lorem", id:1, price:2 },
-    { name:"ipsum", id:2, price:3 },
-    { name:"dolor", id:3, price:5 },
-  ];
+  // const [count,setCount]=useState(0);
+  const data = { name: "Avinash", role: "Trainer" };
+  const initialState={count:0}
 
-  // const total=data.reduce((x,y)=>x+y.price,0);
-  // console.log( total );
+  function reducer(state,action){
+    switch(action.type){
+      case "increment": return { count:state.count+1 };
+      case "decrement": return { count:state.count-1 };
+      case "reset": return { count: initialState.count };
+      default : return state;
+    }
+  }
 
-    
-
-    const ref=useRef(0);
-    const inputRef=useRef(null);
-
-    function changeRef(){ ref.current=ref.current+1; console.log( ref );}
-
-    function focusRef(){ inputRef.current.focus() }
-    
+  const [ state, dispatch] =useReducer(reducer, initialState)
+  
     
   return (
-    <div className="container">
+    <UserContext.Provider value={data}>
+      <div className="container">
       <HeaderComponent />
       <main className="p-3 bg-primary-subtle">
         <h2>Main </h2>
         <p>Paragrapgh</p>
-      <hr />
-
-      <button onClick={changeRef} className="btn btn-info me-3">Change Ref</button>
-
-      <span>ref: {ref.current}</span>
+      
 
       <hr />
-        <button onClick={()=>setCount(count+1)} className="btn btn-info">Counter</button> <output>{count}</output>
+        {/* <button onClick={()=>setCount(count+1)} className="btn btn-info">Counter</button> <output>{count}</output> */}
 
-        <div className="row my-3">
-          <div className="col-auto">
-            <input type="text" className="form-control" ref={inputRef} />
-          </div>
-          <div className="col-auto">
-            <button onClick={focusRef} className="btn btn-primary me-3">Focus</button>
-          </div>
-        </div>
-
+          <button className="btn btn-success me-3" onClick={()=>dispatch({type:"increment"})}>Add</button>
+          <button className="btn btn-danger me-3" onClick={()=>dispatch({type:"decrement"})}>Subtract</button>
+          <button className="btn btn-primary me-3" onClick={()=>dispatch({type:"reset"})}>Reset</button>
+          Current: <output className="me-3">{state.count}</output>,
+          Initial: <output>{initialState.count}</output>
+        
         <hr />
 
       <div className="row">
 
           <div className="col">
-            <Component1 counter={count} />
+            <Component1/>
           </div>
           <div className="col">
-            <Component2 counter={count}/>
+            <Component2 />
           </div>
 
       </div>
 
-      
-     
-    
-
-
       </main>
       <FooterComponent />
     </div>
+    </UserContext.Provider>
   );
 }
 
