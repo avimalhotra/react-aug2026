@@ -1,23 +1,18 @@
-import { } from "react";
-import UserContext from "./contextapi";
-import {useContext} from "react";
 
 
-export default function Component1( ){
+const Component1= ()=>{
 
-      const user=useContext(UserContext);
-
+     
      return (
           <>
                <div className="card">
                     <div className="card-body">
                          <h2>Component 1</h2>
-
-                          <p> {user.name} as {user.role} </p>
-
                         
                     </div>
                </div>
           </>
      )
-}
+};
+
+export default Component1

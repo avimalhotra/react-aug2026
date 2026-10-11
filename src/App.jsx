@@ -1,53 +1,69 @@
 import HeaderComponent from "./Header";
 import FooterComponent from "./Footer";
-import { useState, useReducer } from "react";
 import Component1 from "./Comp1";
 import Component2 from "./Comp2";
-
-import UserContext from "./contextapi";
+import useCounter from "./UseCounter";
+import useFetch from "./useFetch";
 
 function App(){
 
-  // const [count,setCount]=useState(0);
-  const data = { name: "Avinash", role: "Trainer" };
-  const initialState={count:0}
+  const {counter,state, increment, decrement, reset }=useCounter(0);
+  const {data, loading, error}=useFetch("https://techaltum.com/node/api");
 
-  function reducer(state,action){
-    switch(action.type){
-      case "increment": return { count:state.count+1 };
-      case "decrement": return { count:state.count-1 };
-      case "reset": return { count: initialState.count };
-      default : return state;
-    }
-  }
-
-  const [ state, dispatch] =useReducer(reducer, initialState)
-  
+  if(loading){ return  <p>Loading Data</p> }
+  if(error){ return  <p>Error</p> }
     
   return (
-    <UserContext.Provider value={data}>
       <div className="container">
       <HeaderComponent />
       <main className="p-3 bg-primary-subtle">
         <h2>Main </h2>
         <p>Paragrapgh</p>
-      
-
-      <hr />
-        {/* <button onClick={()=>setCount(count+1)} className="btn btn-info">Counter</button> <output>{count}</output> */}
-
-          <button className="btn btn-success me-3" onClick={()=>dispatch({type:"increment"})}>Add</button>
-          <button className="btn btn-danger me-3" onClick={()=>dispatch({type:"decrement"})}>Subtract</button>
-          <button className="btn btn-primary me-3" onClick={()=>dispatch({type:"reset"})}>Reset</button>
-          Current: <output className="me-3">{state.count}</output>,
-          Initial: <output>{initialState.count}</output>
-        
+       
         <hr />
+
+        <button className="btn btn-primary mx-3" onClick={increment}>Increment</button>
+        <button className="btn btn-primary mx-3" onClick={decrement}>Decrement</button>
+        <button className="btn btn-primary mx-3" onClick={reset}>Reset</button>
+
+          Counter: <span>{counter}</span>,
+          Initial Value: <span>{state}</span>
+
+        <hr />
+        <h3>Custom Hook</h3>
+        <p>{loading}</p>
+        <p>{error}</p>
+        <table className="table table-border">
+          <thead>
+            <tr>
+              <th>S No</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            data.map(((i,j)=>(
+              <tr key={i.name}>
+                <td>{++j}</td>
+                <td>{i.name}</td>
+                <td>{i.type}</td>
+                <td>{i.price}</td>
+              </tr>
+            )))
+          }
+          </tbody>
+        </table>
+       
+        <hr />
+
+       
 
       <div className="row">
 
           <div className="col">
-            <Component1/>
+            <Component1 />
           </div>
           <div className="col">
             <Component2 />
@@ -58,7 +74,6 @@ function App(){
       </main>
       <FooterComponent />
     </div>
-    </UserContext.Provider>
   );
 }
 
