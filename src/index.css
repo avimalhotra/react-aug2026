@@ -1,2 +1,5 @@
 
 table{ text-transform: capitalize; }
+
+.overlay{ position: fixed; inset: 0; z-index: 10; background: #000b; }
+.model{ position: fixed; background: #fff; padding: 1rem; border-radius: 5px; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 11; width: 350px; aspect-ratio: 4/3; }

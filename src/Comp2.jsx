@@ -6,7 +6,7 @@ export default function Component2( ){
                <div className="card">
                     <div className="card-body">
                          <h2>Component 2</h2>
-                       
+                         {/* <p>{r}</p> */}
                     </div>
                </div>
           </>

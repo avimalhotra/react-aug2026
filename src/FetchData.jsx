@@ -4,12 +4,11 @@ export default function FetchAPI(){
 
      const [cars,setCars]=useState([]);
      const [error,setError]=useState(false);
-     const [loading,setLoading]=useState(true);
+     // const [loading,setLoading]=useState(true);
      const [sort,setSort]=useState("");
- 
 
      useEffect(()=>{
-          // fetch("https://www.techaltum.com/node/api").then(i=>i.json()).then(i=>console.log(i)).catch(e=>console.warn(e));
+        
           async function getAPI(){
                try{
                     const x=await fetch("https://www.techaltum.com/node/api");
@@ -21,7 +20,7 @@ export default function FetchAPI(){
                     setError(true);
                }
                finally{
-                    setLoading(false);
+                    // setLoading(false);
                }
           }
           getAPI();
@@ -49,8 +48,6 @@ export default function FetchAPI(){
                     </div>
                </div>
 
-
-               { loading && <img src="loader.svg" alt="" width={200} height={200} /> }
                { error && <h3>Error Found</h3> }
                <table className="table table-bordered">
                     <thead className="table-dark">
